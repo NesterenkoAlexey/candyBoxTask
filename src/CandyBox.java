@@ -1,7 +1,7 @@
 
 public class CandyBox implements Box {
 	
-	SuperCandy arrCandy[] = new SuperCandy[10]; // Примем максимум коробки 10 сладостей
+	SuperCandy arrCandy[] = new SuperCandy[10]; // Max boxes - 10
 	int priceBox;
 	int weightBox;
 	
@@ -9,14 +9,14 @@ public class CandyBox implements Box {
 	public void add(SuperCandy sp) {
 		for (int i = 0; i < arrCandy.length ; i++) {
 			if (arrCandy[i] == null) {
-				arrCandy[i] = sp;// добавление в коробку
-				break; // Так как в самом начале массив будет состоять из null
+				arrCandy[i] = sp;// Added box
+				break; // 
 			}
 		}
 	}
 
 	@Override
-	public void delete() { //Удаление по последнему
+	public void delete() { //Last delete
 		for (int j = 0 ; j < arrCandy.length ; j++) {
 			if (j == arrCandy.length - 1 || arrCandy[j+1] == null  ) {
 				arrCandy[j] = null;
@@ -31,14 +31,14 @@ public class CandyBox implements Box {
 				break;
 			}
 			else {
-			arrCandy[i] = arrCandy[i + 1]; //Вместо удаления смещаем массив влево
+			arrCandy[i] = arrCandy[i + 1]; //Instead of deleting, we shift the array to the left
 			i++;
 			}
 		}
 	}
 	
 	@Override
-	public void printCharacteristics() { // Вывод веса и цены товаров
+	public void printCharacteristics() { // Print price and weight
 		priceBox = 0;
 		weightBox = 0;
 		for (int j = 0 ; j < arrCandy.length ; j++) {
@@ -49,14 +49,14 @@ public class CandyBox implements Box {
 			}
 		}
 
-		System.out.println("Цена всех сладостей = " + priceBox);
-		System.out.println("Вес всех сладостей = " + weightBox);
+		System.out.println("Candies price = " + priceBox);
+		System.out.println("Candies weight = " + weightBox);
 	}
 
 	@Override
-	public void printAllCandies() { // Вывод всех сладостей
+	public void printAllCandies() { // Print all candies
 		for (int j = 0 ; j < arrCandy.length ; j++) {
-			System.out.println("№" + j + ": Название - " + arrCandy[j].name + ", Вес - " + arrCandy[j].weight + ", Цена - " + arrCandy[j].price + ", Уникальный параметр - " + arrCandy[j].uniqueParameter);
+			System.out.println("№" + j + ": Name - " + arrCandy[j].name + ", Weight - " + arrCandy[j].weight + ", Price - " + arrCandy[j].price + ", UniqueParameter - " + arrCandy[j].uniqueParameter);
 					
 			if (  j == arrCandy.length - 1 || arrCandy[j+1] == null) {
 				break;
@@ -68,7 +68,7 @@ public class CandyBox implements Box {
 	
 	@Override
 	public void weightOptimization(int maxWeight) {
-		weightBox = 0; //Считаем вес коробки
+		weightBox = 0; //Calculete box weight
 		
 		int indexMinWeight = 0;
 		
@@ -84,7 +84,7 @@ public class CandyBox implements Box {
 			if (arrCandy[1] != null) {
 				for (int j = 1 ; j < arrCandy.length ; j++) {
 					if (arrCandy[indexMinWeight].weight > arrCandy[j].weight) {
-						indexMinWeight = j; //Нашли минимум
+						indexMinWeight = j; //Fiend weight
 					}
 					if (  j == arrCandy.length - 1 || arrCandy[j+1] == null) {
 						break;
@@ -92,7 +92,7 @@ public class CandyBox implements Box {
 				}
 			}
 			weightBox -= arrCandy[indexMinWeight].weight;
-			int i = indexMinWeight; //Аналогично удаляем этот элемент
+			int i = indexMinWeight; //Delete this element
 			while (i < arrCandy.length) {
 				if (i == arrCandy.length - 1 || arrCandy[i+1] ==null) {
 					arrCandy[i] = null;
@@ -109,9 +109,9 @@ public class CandyBox implements Box {
 	}	
 	
 	
-	@Override //Аналогично для цены
+	@Override //Likewise for the price
 	public void priceOptimization(int maxPrice) {
-		priceBox = 0; //Считаем стоимость коробки
+		priceBox = 0; 
 		
 		int indexMinPrice = 0;
 		
@@ -126,14 +126,14 @@ public class CandyBox implements Box {
 			indexMinPrice = 0;
 			for (int j = 1 ; j < arrCandy.length ; j++) {
 				if (arrCandy[indexMinPrice].price > arrCandy[j].price) {
-					indexMinPrice = j; //Нашли минимум
+					indexMinPrice = j; 
 				}
 				if (  j == arrCandy.length - 1 || arrCandy[j+1] == null) {
 					break;
 				}
 			}
 			priceBox -= arrCandy[indexMinPrice].price;
-			int i = indexMinPrice; //Аналогично удаляем этот элемент
+			int i = indexMinPrice; 
 			while (i < arrCandy.length) {
 				if (i == arrCandy.length - 1 || arrCandy[i+1] ==null) {
 					arrCandy[i] = null;
