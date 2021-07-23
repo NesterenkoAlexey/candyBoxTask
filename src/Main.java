@@ -13,9 +13,12 @@ public class Main {
 		
 		cb.printAllCandies();
 		cb.printCharacteristics();
-		cb.weightOptimization(500);
-		cb.printCharacteristics();
+		
+		cb.priceOptimization(500);
+		
 		cb.printAllCandies();
+		cb.printCharacteristics();
+		
 		System.out.println("111");
 	}
 

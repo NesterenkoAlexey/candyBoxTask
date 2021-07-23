@@ -1,150 +1,104 @@
+import java.util.List;
+import java.util.ArrayList;
 
 public class CandyBox implements Box {
 	
-	SuperCandy arrCandy[] = new SuperCandy[10]; // Max boxes - 10
+	List<SuperCandy> listCandy = new ArrayList(); // Use List
 	int priceBox;
 	int weightBox;
 	
 	@Override
 	public void add(SuperCandy sp) {
-		for (int i = 0; i < arrCandy.length ; i++) {
-			if (arrCandy[i] == null) {
-				arrCandy[i] = sp;// Added box
-				break; // 
-			}
-		}
+		listCandy.add(sp);
 	}
 
 	@Override
 	public void delete() { //Last delete
-		for (int j = 0 ; j < arrCandy.length ; j++) {
-			if (j == arrCandy.length - 1 || arrCandy[j+1] == null  ) {
-				arrCandy[j] = null;
-				break;
-			}
-		}
-	} // и по индексу
+		listCandy.remove(listCandy.size() - 1);
+	} 
 	public void delete(int i) {
-		while (i < arrCandy.length) {
-			if (i == arrCandy.length - 1 || arrCandy[i+1] ==null) {
-				arrCandy[i] = null;
-				break;
-			}
-			else {
-			arrCandy[i] = arrCandy[i + 1]; //Instead of deleting, we shift the array to the left
-			i++;
-			}
-		}
+		listCandy.remove(i);
 	}
 	
 	@Override
-	public void printCharacteristics() { // Print price and weight
+	public void printCharacteristics() { // Print weight and price
 		priceBox = 0;
 		weightBox = 0;
-		for (int j = 0 ; j < arrCandy.length ; j++) {
-			priceBox += arrCandy[j].price;
-			weightBox += arrCandy[j].weight;		
-			if (  j == arrCandy.length - 1 || arrCandy[j+1] == null) {
-				break;
-			}
+		for (SuperCandy sp : listCandy) {
+			priceBox += sp.price;
+			weightBox += sp.weight;		
 		}
 
-		System.out.println("Candies price = " + priceBox);
-		System.out.println("Candies weight = " + weightBox);
+		System.out.println("Цена всех сладостей = " + priceBox);
+		System.out.println("Вес всех сладостей = " + weightBox);
 	}
 
 	@Override
-	public void printAllCandies() { // Print all candies
-		for (int j = 0 ; j < arrCandy.length ; j++) {
-			System.out.println("№" + j + ": Name - " + arrCandy[j].name + ", Weight - " + arrCandy[j].weight + ", Price - " + arrCandy[j].price + ", UniqueParameter - " + arrCandy[j].uniqueParameter);
-					
-			if (  j == arrCandy.length - 1 || arrCandy[j+1] == null) {
-				break;
-			}
+	public void printAllCandies() { // Print all Candies
+		int j = 0;
+		for (SuperCandy sp : listCandy) {
+			System.out.println("№" + j + ": Name - " + sp.name + ", Weight - " + sp.weight + ", Price - " + sp.price + ", Uniqparam - " + sp.uniqueParameter);
+			j++;		
 		}
 
 	}
-	//ОПТИМИЗАЦИЯ:
+	//Optimization:
 	
 	@Override
 	public void weightOptimization(int maxWeight) {
-		weightBox = 0; //Calculete box weight
+		weightBox = 0; //Calculate weight
 		
 		int indexMinWeight = 0;
+		int minWeight = 0;
+		int flag = 0;
 		
-		for (int j = 0 ; j < arrCandy.length ; j++) {
-			weightBox += arrCandy[j].weight;
-			
-			if (  j == arrCandy.length - 1 || arrCandy[j+1] == null) {
-				break;
-			}
+		for (SuperCandy sp : listCandy) {
+			weightBox += sp.weight;		
 		}
+		
 		while (weightBox > maxWeight) {
 			indexMinWeight = 0;
-			if (arrCandy[1] != null) {
-				for (int j = 1 ; j < arrCandy.length ; j++) {
-					if (arrCandy[indexMinWeight].weight > arrCandy[j].weight) {
-						indexMinWeight = j; //Fiend weight
-					}
-					if (  j == arrCandy.length - 1 || arrCandy[j+1] == null) {
-						break;
-					}
+			minWeight = 99999999;
+			flag = 0;
+			for(SuperCandy sp : listCandy) {
+				if (minWeight > sp.weight) {
+					indexMinWeight = flag; //Find min
+					minWeight = sp.weight;
 				}
+				flag++;
 			}
-			weightBox -= arrCandy[indexMinWeight].weight;
-			int i = indexMinWeight; //Delete this element
-			while (i < arrCandy.length) {
-				if (i == arrCandy.length - 1 || arrCandy[i+1] ==null) {
-					arrCandy[i] = null;
-					break;
-				}
-				else {
-				arrCandy[i] = arrCandy[i + 1];
-				i++;
-					
-				}
-			}
+			listCandy.remove(indexMinWeight); //delete this element
+			weightBox -= minWeight;
 		
 		}
 	}	
 	
 	
-	@Override //Likewise for the price
+	@Override //For price
 	public void priceOptimization(int maxPrice) {
-		priceBox = 0; 
+		priceBox = 0; //Calculate price
 		
 		int indexMinPrice = 0;
+		int minPrice = 0;
+		int flag = 0;
 		
-		for (int j = 0 ; j < arrCandy.length ; j++) {
-			priceBox += arrCandy[j].price;
-			
-			if (  j == arrCandy.length - 1 || arrCandy[j+1] == null) {
-				break;
-			}
+		for (SuperCandy sp : listCandy) {
+			priceBox += sp.price;		
 		}
+		
 		while (priceBox > maxPrice) {
 			indexMinPrice = 0;
-			for (int j = 1 ; j < arrCandy.length ; j++) {
-				if (arrCandy[indexMinPrice].price > arrCandy[j].price) {
-					indexMinPrice = j; 
+			minPrice = 99999999;
+			flag = 0;
+			for(SuperCandy sp : listCandy) {
+				if (minPrice > sp.price) {
+					indexMinPrice = flag; //Find min
+					minPrice = sp.price;
 				}
-				if (  j == arrCandy.length - 1 || arrCandy[j+1] == null) {
-					break;
-				}
+				flag++;
 			}
-			priceBox -= arrCandy[indexMinPrice].price;
-			int i = indexMinPrice; 
-			while (i < arrCandy.length) {
-				if (i == arrCandy.length - 1 || arrCandy[i+1] ==null) {
-					arrCandy[i] = null;
-					break;
-				}
-				else {
-				arrCandy[i] = arrCandy[i + 1];
-				i++;
-					
-				}
-			}
+			listCandy.remove(indexMinPrice); //delete this element
+			priceBox -= minPrice; 
 		
 		}
 	}
